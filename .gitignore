@@ -1,0 +1,25 @@
+.gitignore
+
+#object files
+*.o
+*.ko
+*.obj
+*.elf
+*.pyc
+*.so
+
+# CLion project files
+.idea
+cmake-build-*
+
+# visual studio code
+.vscode
+build*
+
+# libcurl binaries
+tags
+tags.lock
+
+# libraries (pulled automatically by cmake)
+libraries/
+libraries/websocketpp
