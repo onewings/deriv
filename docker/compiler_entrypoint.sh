@@ -18,4 +18,6 @@ mkdir -p /deriv/bin && \
     cd /root/deriv/ && \
     cp build/Release/deriv_test /deriv/bin/
 
+echo "***********************"
+echo "running deriv_test R_10"
 /deriv/bin/deriv_test R_10
