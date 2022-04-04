@@ -78,7 +78,7 @@ set(WEBSOCKET_INCLUDE_DIRS
 include_directories(${WEBSOCKET_INCLUDE_DIRS})
 
 set(TARGET_NAME deriv_test)
-add_executable (${TARGET_NAME} main.cpp WsClient.cpp)
+add_executable (${TARGET_NAME} main.cpp WsClient.cpp DelayedMessageHandler.cpp)
 
 target_include_directories(${TARGET_NAME} PUBLIC
     ${WEBSOCKET_INCLUDE_DIRS}

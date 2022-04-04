@@ -55,6 +55,12 @@ WsClient& WsClient::SetInstrument(const std::string& instrument)
     return (*this);
 }
 
+WsClient& WsClient::SetMessageHandler(MessageHandler handler)
+{
+    m_handler = handler;
+    return (*this);
+}
+
 void WsClient::Run()
 {
     m_client.run();
@@ -62,7 +68,7 @@ void WsClient::Run()
 
 void WsClient::OnMessage(websocketpp::connection_hdl, Client::message_ptr msg)
 {
-    std::cout << msg->get_payload() << std::endl;
+    m_handler(msg->get_payload());
 }
 
 void WsClient::OnOpen(websocketpp::connection_hdl hdl)

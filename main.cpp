@@ -1,6 +1,6 @@
 #include <iostream>
 #include "WsClient.h"
-
+#include "DelayedMessageHandler.h"
 
 int main(int argc, char* argv[])
 {
@@ -21,8 +21,17 @@ int main(int argc, char* argv[])
 
     try
     {
-        WsClient c;
-        c.SetUri(uri).SetInstrument(instrument).Connect().Run();
+        DelayedMessageHandler delayedMsgHandler;
+        delayedMsgHandler.SetMessageHandler([](const std::string& message) {
+            std::cout << " aaa " << message << std::endl;
+        });
+
+        WsClient client;
+        client.SetUri(uri).SetInstrument(instrument).SetMessageHandler([&](const std::string& message) {
+                                                        delayedMsgHandler.OnMessage(message);
+                                                    })
+                .Connect()
+                .Run();
     }
     catch (websocketpp::exception const& e)
     {
