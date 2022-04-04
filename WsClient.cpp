@@ -22,6 +22,9 @@ WsClient::WsClient()
             [&](websocketpp::connection_hdl hdl) {
                 return OnTlsInit(hdl);
             });
+    m_client.set_open_handler([&](websocketpp::connection_hdl hdl) {
+        OnOpen(hdl);
+    });
 }
 
 WsClient& WsClient::Connect()
@@ -49,9 +52,6 @@ WsClient& WsClient::SetUri(const std::string& uri)
 WsClient& WsClient::SetInstrument(const std::string& instrument)
 {
     m_instrument = instrument;
-    m_client.set_open_handler([&](websocketpp::connection_hdl hdl) {
-        OnOpen(hdl);
-    });
     return (*this);
 }
 
