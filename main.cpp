@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     {
         DelayedMessageHandler delayedMsgHandler;
         delayedMsgHandler.SetMessageHandler([](const std::string& message) {
-            std::cout << " aaa " << message << std::endl;
+            std::cout << message << std::endl;
         });
 
         WsClient client;
