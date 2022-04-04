@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
     try
     {
         DelayedMessageHandler delayedMsgHandler;
+        //here you can set your own handler
         delayedMsgHandler.SetMessageHandler([](const std::string& message) {
             std::cout << message << std::endl;
         });

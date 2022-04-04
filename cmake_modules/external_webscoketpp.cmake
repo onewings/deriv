@@ -16,6 +16,3 @@ ExternalProject_Add(project_websocket
 )
 
 ExternalProject_Get_Property(project_websocket install_dir) 
-#add_library(libwebsocket STATIC IMPORTED)
-#add_dependencies(libwebsocket project_websocket)
-#set_property(TARGET libwebsocket PROPERTY IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/libraries/websocketpp/libfmt.a)
