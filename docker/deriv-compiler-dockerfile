@@ -1,0 +1,44 @@
+
+ARG REGISTRY
+ARG RELEASE
+FROM deriv-base:${RELEASE}
+LABEL version="0.1"
+LABEL description="Docker file for Deriv compiler"
+
+ENV PATH="$PATH:/opt/rh/gcc-toolset-10/root/usr/bin" 
+#  swap this packages with the gcc ones when we are ready to move the code to gcc10, and enable the 2 env variables
+    #gcc-toolset-10-gcc \
+    #gcc-toolset-10-gcc-c++ \
+#ENV CMAKE_CXX_COMPILER="/opt/rh/gcc-toolset-10/root/usr/bin/g++"
+#ENV CMAKE_C_COMPILER="/opt/rh/gcc-toolset-10/root/usr/bin/gc"
+
+# install dependencies:
+RUN  yum update -y && yum install -y \
+    boost-devel \
+    gcc \
+    gcc-c++ \
+    git \
+    gnutls \
+    gnutls-devel \
+    libcurl-devel \
+    make \
+    openssl-devel \
+    pkg-config \
+    rpcgen \
+    udev \
+    zlib \
+    zlib-devel \
+&& yum -y clean all && rm -rf /var/cache
+
+ARG CMAKE_VERSION=3.23.0
+
+RUN wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh \
+  -q -O /tmp/cmake-install.sh
+RUN  chmod u+x /tmp/cmake-install.sh && \
+  mkdir /usr/bin/cmake && \
+  /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake && \
+  rm /tmp/cmake-install.sh
+
+COPY compiler_entrypoint.sh /deriv/bin/compiler_entrypoint.sh
+
+CMD /deriv/bin/compiler_entrypoint.sh
